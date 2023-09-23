@@ -1,0 +1,26 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "username": "admin",
+      "password": "admin"
+    }
+  ],
+  "players": [
+    {
+      "id": 1,
+      "firstName": "Sandip",
+      "lastName": "Patil",
+      "email": "sandip@gmail.com",
+      "contact": "9960011028",
+      "teamId": 1
+    }
+  ],
+  "teams": [
+    {
+      "id": 1,
+      "name": "Mumbai Indians",
+      "description": "Cricket Team"
+    }
+  ]
+}
