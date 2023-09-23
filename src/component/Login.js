@@ -1,8 +1,18 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Field, Form, Formik, ErrorMessage } from "formik";
 import * as Yup from "yup";
+import { Navigate, Outlet, useNavigate, Link } from "react-router-dom";
 
 function Login() {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("Login"));
+    if (user) {
+      navigate("/admin/dashboard");
+    }
+  }, []);
+
   const initialValues = {
     username: "",
     password: "",
@@ -26,6 +36,7 @@ function Login() {
 
       if (user) {
         localStorage.setItem("Login", JSON.stringify(inpuUserData));
+        navigate("/admin/dashboard");
         alert("Login successfully");
       } else {
         alert("Invalid username or password");
