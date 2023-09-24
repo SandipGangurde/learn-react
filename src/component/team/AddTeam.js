@@ -10,6 +10,9 @@ import AdminNavbar from "../Adminnavbar";
 const AddTeam = () => {
   const navigate = useNavigate();
 
+  /**
+   * checks user is login or not
+   */
   const loginCheck = () => {
     const user = JSON.parse(localStorage.getItem("Login"));
     if (!user) {
@@ -17,28 +20,40 @@ const AddTeam = () => {
     }
   };
 
+  /**
+   * first checks user is login or not
+   */
   useEffect(() => {
     loginCheck();
   }, []);
 
+  /**
+   * initially sets value empty for form
+   */
   const initialValues = {
     name: "",
     description: "",
   };
 
+  /**
+   * validation schema for Add Team form
+   */
   const ValidationSchema = Yup.object().shape({
     name: Yup.string().required("Name is required"),
     description: Yup.string().required("Description is required"),
   });
 
-  const backDashboard = () => {
-    navigate("/admin/dashboard");
-  };
-
+  /**
+   * navigates to team list
+   */
   const teamList = () => {
     navigate("/admin/team");
   };
 
+  /**
+   * It adds team into json server
+   * @param {*} values : add team form submitted values
+   */
   const handleAddTeam = async (values) => {
     try {
       await fetch("http://localhost:3001/teams", {
@@ -62,6 +77,7 @@ const AddTeam = () => {
     <>
       <AdminNavbar />
 
+      {/* formik for form processing and building */}
       <Formik
         initialValues={initialValues}
         validationSchema={ValidationSchema}
