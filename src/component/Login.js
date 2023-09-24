@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { Field, Form, Formik, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import { Navigate, Outlet, useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
+import { toast } from "react-toastify";
 
 function Login() {
   const navigate = useNavigate();
@@ -23,7 +25,12 @@ function Login() {
     password: Yup.string().required("Password is required"),
   });
 
+  const notify = (message) => {
+    toast(message);
+  };
+
   const handleLogin = async (inpuUserData) => {
+    debugger;
     try {
       // Perform a fetch request to check the credentials against the JSON server
       const response = await fetch("http://localhost:3001/users");
@@ -36,13 +43,16 @@ function Login() {
 
       if (user) {
         localStorage.setItem("Login", JSON.stringify(inpuUserData));
+        notify("Login successfully");
         navigate("/admin/dashboard");
-        alert("Login successfully");
+        // alert("Login successfully");
       } else {
-        alert("Invalid username or password");
+        notify("Invalid username or password");
+        // alert("Invalid username or password");
       }
     } catch (error) {
-      console.error("Error logging in:", error);
+      notify("Error logging in:", error);
+      // console.error("Error logging in:", error);
     }
   };
 

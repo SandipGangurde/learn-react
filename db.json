@@ -16,19 +16,19 @@
       "teamId": 1
     },
     {
-      "firstName": "Akanksha",
-      "lastName": "Patil",
+      "firstName": "AK1",
+      "lastName": "patil",
       "email": "akanksha@gmail.com",
-      "contact": "994837593",
-      "teamId": 1,
+      "contact": "9948375931",
+      "teamId": "6",
       "id": 2
     },
     {
       "firstName": "pranav",
       "lastName": "patil",
       "email": "pk@gmail.com",
-      "contact": "99979234",
-      "teamId": 1,
+      "contact": "9948375931",
+      "teamId": "4",
       "id": 3
     }
   ],
@@ -37,6 +37,31 @@
       "id": 1,
       "name": "Mumbai Indians",
       "description": "Cricket Team"
+    },
+    {
+      "name": "CSK",
+      "description": "Chennai Super Kings",
+      "id": 2
+    },
+    {
+      "name": "RR",
+      "description": "Rajasthan Royals",
+      "id": 3
+    },
+    {
+      "name": "KKR",
+      "description": "Kolkata Knight Riders",
+      "id": 4
+    },
+    {
+      "name": "PK",
+      "description": "Punjab Kings",
+      "id": 5
+    },
+    {
+      "name": "Shivray",
+      "description": "shivray desc",
+      "id": 6
     }
   ]
 }
