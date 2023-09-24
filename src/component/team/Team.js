@@ -38,7 +38,7 @@ function Team() {
   };
 
   /**
-   * 
+   * fetch teams for listing
    */
   const fetchTeams = async () => {
     try {
@@ -49,15 +49,17 @@ function Team() {
     }
   };
 
+  /**
+   * first it checks user login or not if login fetch teams
+   */
   useEffect(() => {
     loginCheck();
     fetchTeams();
   }, []);
 
-  const backDashboard = () => {
-    navigate("/admin/dashboard");
-  };
-
+  /**
+   * It navigates to add team form
+   */
   const addTeam = () => {
     navigate("/admin/team/add");
   };
