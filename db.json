@@ -8,22 +8,6 @@
   ],
   "players": [
     {
-      "id": 1,
-      "firstName": "Sandip",
-      "lastName": "Patil",
-      "email": "sandip@gmail.com",
-      "contact": "9960011028",
-      "teamId": 1
-    },
-    {
-      "firstName": "AK1",
-      "lastName": "patil",
-      "email": "akanksha@gmail.com",
-      "contact": "9948375931",
-      "teamId": "6",
-      "id": 2
-    },
-    {
       "firstName": "pranav",
       "lastName": "patil",
       "email": "pk@gmail.com",

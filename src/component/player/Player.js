@@ -15,6 +15,21 @@ function Player() {
     }
   };
 
+  const removePlayer = (id) => {
+    if (window.confirm("Do you want to remove?")) {
+      fetch("http://localhost:3001/players/" + id, {
+        method: "DELETE",
+      })
+        .then((res) => {
+          alert("Removed successfully.");
+          console.log("deleted", res);
+          window.location.reload();
+        })
+        .catch((err) => {
+          console.log(err.message);
+        });
+    }
+  };
   const fetchTeams = async () => {
     try {
       const response = await fetch("http://localhost:3001/teams");
@@ -83,6 +98,7 @@ function Player() {
                   <td>Email</td>
                   <td>Contact</td>
                   <td>Team</td>
+                  <td>Action</td>
                 </tr>
               </thead>
               <tbody>
@@ -95,10 +111,17 @@ function Player() {
                       <td>{player.email}</td>
                       <td>{player.contact}</td>
                       <td>{getTeamNameById(player.teamId)}</td>
-                      {/* <td><a onClick={() => { LoadEdit(item.id) }} className="btn btn-success">Edit</a>
-                                            <a onClick={() => { Removefunction(item.id) }} className="btn btn-danger">Remove</a>
-                                            <a onClick={() => { LoadDetail(item.id) }} className="btn btn-primary">Details</a>
-                                        </td> */}
+                      <td>
+                        <a
+                          onClick={() => {
+                            removePlayer(player.id);
+                          }}
+                          className="btn btn-danger"
+                        >
+                          Remove
+                        </a>
+                        {/* <a onClick={() => { LoadDetail(item.id) }} className="btn btn-primary">Details</a> */}
+                      </td>
                     </tr>
                   ))}
               </tbody>
