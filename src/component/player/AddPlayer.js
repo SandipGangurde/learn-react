@@ -2,7 +2,14 @@ import React, { useEffect, useState } from "react";
 import { Field, Form, Formik, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";
-import Button from "react-bootstrap/Button";
+import {
+  Button,
+  Container,
+  Card,
+  Row,
+  Col,
+  FloatingLabel,
+} from "react-bootstrap";
 
 import { toast } from "react-toastify";
 import AdminNavbar from "../Adminnavbar";
@@ -23,7 +30,7 @@ function AddPlayer() {
     lastName: "",
     email: "",
     contact: "",
-    teamId: 0,
+    teamId: "",
   };
 
   const ValidationSchema = Yup.object().shape({
@@ -90,9 +97,7 @@ function AddPlayer() {
 
   return (
     <>
-      <div className="container m-4">
-        <h3 className="text-center">Add Player</h3>
-      </div>
+      <AdminNavbar />
 
       <Formik
         initialValues={initialValues}
@@ -100,58 +105,142 @@ function AddPlayer() {
         onSubmit={handleAddPlayer}
       >
         {() => (
-          <div className="container">
+          <Container>
             <Form>
-              <div className="form-group">
-                <Field
-                  name="firstName"
-                  className="form-control"
-                  placeholder="First Name"
-                />
-                <ErrorMessage name="firstName" />
-              </div>
-              <div className="form-group">
-                <Field
-                  name="lastName"
-                  type="lastName"
-                  className="form-control"
-                  placeholder="Last Name"
-                />
-                <ErrorMessage name="lastName" />
-              </div>
-              <div className="form-group">
-                <Field
-                  name="email"
-                  type="email"
-                  placeholder="Email"
-                  className="form-control"
-                />
-                <ErrorMessage name="email" />
-              </div>
-              <div className="form-group">
-                <Field
-                  name="contact"
-                  type="contact"
-                  placeholder="contact"
-                  className="form-control"
-                />
-                <ErrorMessage name="contact" />
-                <div className="form-group">
-                  <Field as="select" name="teamId" className="form-control">
-                    <option value="">Select Team</option>
-                    {teams &&
-                      teams.map((team) => (
-                        <option key={team.id} value={team.id}>
-                          {team.name}
-                        </option>
-                      ))}
-                  </Field>
-                  <ErrorMessage name="teamId" />
-                </div>
-              </div>
-              <button type="submit">Submit</button>
+              <Card className="col-md-6 mx-auto mt-5">
+                <Card.Body>
+                  <Card.Title>
+                    <h3 className="text-center mb-3">Add Player</h3>
+                  </Card.Title>
+
+                  <Row className="mb-1">
+                    <Col className="col-12">
+                      <FloatingLabel
+                        controlId="firstName"
+                        label="First Name"
+                        className="mb-3"
+                      >
+                        <Field
+                          name="firstName"
+                          id="floatingFirstName"
+                          className="form-control"
+                          placeholder="First Name"
+                        />
+                        <ErrorMessage
+                          component="div"
+                          name="firstName"
+                          className="error-message"
+                        />
+                      </FloatingLabel>
+                    </Col>
+                  </Row>
+
+                  <Row className="form-floating mb-1">
+                    <Col className="col-12">
+                      <FloatingLabel
+                        controlId="floatingLastName"
+                        label="Last Name"
+                        className="mb-3"
+                      >
+                        <Field
+                          name="lastName"
+                          id="floatingLastName"
+                          className="form-control"
+                          placeholder="Last Name"
+                        />
+                        <ErrorMessage
+                          component="div"
+                          name="lastName"
+                          className="text-danger"
+                        />
+                      </FloatingLabel>
+                    </Col>
+                  </Row>
+
+                  <Row className="form-floating mb-1">
+                    <Col className="col-12">
+                      <FloatingLabel
+                        controlId="floatingEmail"
+                        label="Email"
+                        className="mb-3"
+                      >
+                        <Field
+                          name="email"
+                          id="floatingEmail"
+                          type="email"
+                          className="form-control"
+                          placeholder="Email"
+                        />
+                        <ErrorMessage
+                          component="div"
+                          name="email"
+                          className="text-danger"
+                        />
+                      </FloatingLabel>
+                    </Col>
+                  </Row>
+
+                  <Row className="form-floating mb-1">
+                    <Col className="col-12">
+                      <FloatingLabel
+                        controlId="floatingContact"
+                        label="Contact"
+                        className="mb-3"
+                      >
+                        <Field
+                          name="contact"
+                          id="floatingContact"
+                          className="form-control"
+                          placeholder="Contact"
+                        />
+                        <ErrorMessage
+                          component="div"
+                          name="contact"
+                          className="error-message"
+                        />
+                      </FloatingLabel>
+                    </Col>
+                  </Row>
+
+                  <Row className="form-floating mb-1">
+                    <Col className="col-12">
+                      <FloatingLabel
+                        controlId="floatingTeamId"
+                        label="Team"
+                        className="mb-3"
+                      >
+                        <Field
+                          as="select"
+                          name="teamId"
+                          className="form-control"
+                        >
+                          <option value="">Select Team</option>
+                          {teams &&
+                            teams.map((team) => (
+                              <option key={team.id} value={team.id}>
+                                {team.name}
+                              </option>
+                            ))}
+                        </Field>
+                        <ErrorMessage
+                          component="div"
+                          name="teamId"
+                          className="error-message"
+                        />
+                      </FloatingLabel>
+                    </Col>
+                  </Row>
+                </Card.Body>
+                <Button
+                  variant="btn btn-primary"
+                  className="col-md-5 mx-auto mb-4"
+                  type="submit"
+                >
+                  Submit
+                </Button>
+              </Card>
             </Form>
-          </div>
+          </Container>
         )}
       </Formik>
     </>
