@@ -3,14 +3,16 @@ import { Field, Form, Formik, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";
 import { Button, Container, Card, FloatingLabel } from "react-bootstrap";
-
 import { toast } from "react-toastify";
 import AdminNavbar from "../Adminnavbar";
 
-function AddPlayer() {
+const AddPlayer = () => {
   const navigate = useNavigate();
   const [teams, setTeams] = useState([]);
 
+  /**
+   * sets initial values empty
+   */
   const initialValues = {
     firstName: "",
     lastName: "",
@@ -19,6 +21,7 @@ function AddPlayer() {
     teamId: "",
   };
 
+  // regular expression for only character allowd, email, phone number
   const charactersRegex = /^[A-Za-z]+$/;
   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   const phoneNumberRegex = /^\d{10}$/;
@@ -218,6 +221,6 @@ function AddPlayer() {
       </Formik>
     </>
   );
-}
+};
 
 export default AddPlayer;

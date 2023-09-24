@@ -9,6 +9,9 @@ function Player() {
   const [players, setPlayers] = useState([]);
   const [teams, setTeams] = useState([]);
 
+  /**
+   * It checks user is login o not
+   */
   const loginCheck = () => {
     const user = JSON.parse(localStorage.getItem("Login"));
     if (!user) {
@@ -16,6 +19,10 @@ function Player() {
     }
   };
 
+  /**
+   *
+   * @param {*} id : removes player from list
+   */
   const removePlayer = (id) => {
     if (window.confirm("Do you want to remove?")) {
       fetch("http://localhost:3001/players/" + id, {
@@ -31,6 +38,9 @@ function Player() {
     }
   };
 
+  /**
+   * get team records for displaying team name
+   */
   const fetchTeams = async () => {
     try {
       const response = await fetch("http://localhost:3001/teams");
@@ -40,6 +50,9 @@ function Player() {
     }
   };
 
+  /**
+   * gets players from json server for listing
+   */
   const fetchPlayers = async () => {
     try {
       const response = await fetch("http://localhost:3001/players");
@@ -49,16 +62,19 @@ function Player() {
     }
   };
 
+  /**
+   * first call loginCheck function
+   * if logged in then calls fetchTeams and fetchPlayers function
+   */
   useEffect(() => {
     loginCheck();
     fetchTeams();
     fetchPlayers();
   }, []);
 
-  const backDashboard = () => {
-    navigate("/admin/dashboard");
-  };
-
+  /**
+   * Add Player record to json server
+   */
   const addPlayer = () => {
     navigate("/admin/player/add");
   };
