@@ -2,7 +2,14 @@ import React, { useEffect } from "react";
 import { Field, Form, Formik, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";
-import { Card, Row, Col, Button, Container } from "react-bootstrap";
+import {
+  Card,
+  Row,
+  Col,
+  Button,
+  Container,
+  FloatingLabel,
+} from "react-bootstrap";
 import { toast } from "react-toastify";
 
 function Login() {
@@ -60,41 +67,48 @@ function Login() {
               <Card className="col-md-6 mx-auto mt-5">
                 <Card.Body>
                   <Card.Title>
-                    <h1 className="text-center mb-3">Login</h1>
+                    <h3 className="text-center mb-3">Login</h3>
                   </Card.Title>
-                  <Row className="mb-2">
-                    <Col className="text-center">
-                      <label htmlFor="username">Username</label>
-                    </Col>
-                    <Col>
-                      <Field
-                        type="text"
-                        id="username"
-                        name="username"
-                        className="form-control"
-                        placeholder="Enter username"
-                      />
-                      <ErrorMessage component="div" name="username" />
-                    </Col>
-                  </Row>
-                  <Row className="mb-2">
-                    <Col className="text-center">
-                      <label htmlFor="password">Password</label>
-                    </Col>
-                    <Col>
-                      <Field
-                        type="password"
-                        id="password"
-                        name="password"
-                        className="form-control"
-                        placeholder="Enter password"
-                      />
-                      <ErrorMessage component="div" name="password" />
-                    </Col>
-                  </Row>
+
+                  <FloatingLabel
+                    controlId="floatingUsername"
+                    label="Username"
+                    className="mb-3"
+                  >
+                    <Field
+                      name="username"
+                      id="floatingUsername"
+                      className="form-control"
+                      placeholder="First Name"
+                    />
+                    <ErrorMessage
+                      component="div"
+                      name="username"
+                      className="error-message"
+                    />
+                  </FloatingLabel>
+
+                  <FloatingLabel
+                    controlId="floatingPassword"
+                    label="Password"
+                    className="mb-3"
+                  >
+                    <Field
+                      type="password"
+                      name="password"
+                      id="floatingPassword"
+                      className="form-control"
+                      placeholder="Password"
+                    />
+                    <ErrorMessage
+                      component="div"
+                      name="password"
+                      className="error-message"
+                    />
+                  </FloatingLabel>
                 </Card.Body>
                 <Button
-                  variant="primary"
+                  variant="outline-primary"
                   type="submit"
                   className="col-md-5 mx-auto mb-4"
                 >
