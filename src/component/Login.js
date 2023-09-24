@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { Field, Form, Formik, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";
-
+import { Card, Row, Col, Button, Container } from "react-bootstrap";
 import { toast } from "react-toastify";
 
 function Login() {
@@ -25,14 +25,8 @@ function Login() {
     password: Yup.string().required("Password is required"),
   });
 
-  const notify = (message) => {
-    toast(message);
-  };
-
   const handleLogin = async (inpuUserData) => {
-    debugger;
     try {
-      // Perform a fetch request to check the credentials against the JSON server
       const response = await fetch("http://localhost:3001/users");
       const users = await response.json();
       const user = users.find(
@@ -43,16 +37,13 @@ function Login() {
 
       if (user) {
         localStorage.setItem("Login", JSON.stringify(inpuUserData));
-        notify("Login successfully");
+        toast.success("Login successfully");
         navigate("/admin/dashboard");
-        // alert("Login successfully");
       } else {
-        notify("Invalid username or password");
-        // alert("Invalid username or password");
+        toast.error("Invalid username or password");
       }
     } catch (error) {
-      notify("Error logging in:", error);
-      // console.error("Error logging in:", error);
+      toast.error("Error logging in:", error);
     }
   };
 
@@ -64,29 +55,54 @@ function Login() {
         onSubmit={handleLogin}
       >
         {() => (
-          <div className="container">
+          <Container>
             <Form>
-              <div>
-                <Field
-                  type="text"
-                  name="username"
-                  placeholder="Enter username"
-                />
-                <ErrorMessage component="div" name="username" />
-              </div>
-
-              <div>
-                <Field
-                  type="password"
-                  name="password"
-                  placeholder="Enter password"
-                />
-                <ErrorMessage component="div" name="password" />
-              </div>
-
-              <button type="submit">Submit</button>
+              <Card className="col-md-6 mx-auto mt-5">
+                <Card.Body>
+                  <Card.Title>
+                    <h1 className="text-center mb-3">Login</h1>
+                  </Card.Title>
+                  <Row className="mb-2">
+                    <Col className="text-center">
+                      <label htmlFor="username">Username</label>
+                    </Col>
+                    <Col>
+                      <Field
+                        type="text"
+                        id="username"
+                        name="username"
+                        className="form-control"
+                        placeholder="Enter username"
+                      />
+                      <ErrorMessage component="div" name="username" />
+                    </Col>
+                  </Row>
+                  <Row className="mb-2">
+                    <Col className="text-center">
+                      <label htmlFor="password">Password</label>
+                    </Col>
+                    <Col>
+                      <Field
+                        type="password"
+                        id="password"
+                        name="password"
+                        className="form-control"
+                        placeholder="Enter password"
+                      />
+                      <ErrorMessage component="div" name="password" />
+                    </Col>
+                  </Row>
+                </Card.Body>
+                <Button
+                  variant="primary"
+                  type="submit"
+                  className="col-md-5 mx-auto mb-4"
+                >
+                  Login
+                </Button>
+              </Card>
             </Form>
-          </div>
+          </Container>
         )}
       </Formik>
     </>
