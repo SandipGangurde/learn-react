@@ -16,6 +16,22 @@ function Team() {
     }
   };
 
+  const removeTeam = (id) => {
+    if (window.confirm("Do you want to remove?")) {
+      fetch("http://localhost:3001/teams/" + id, {
+        method: "DELETE",
+      })
+        .then((res) => {
+          alert("Removed successfully.");
+          console.log("deleted", res);
+          window.location.reload();
+        })
+        .catch((err) => {
+          console.log(err.message);
+        });
+    }
+  };
+
   const fetchPlayers = async () => {
     try {
       debugger;
@@ -64,6 +80,7 @@ function Team() {
                   <td>ID</td>
                   <td>Name</td>
                   <td>Description</td>
+                  <td>Action</td>
                 </tr>
               </thead>
               <tbody>
@@ -73,10 +90,16 @@ function Team() {
                       <td>{team.id}</td>
                       <td>{team.name}</td>
                       <td>{team.description}</td>
-                      {/* <td><a onClick={() => { LoadEdit(item.id) }} className="btn btn-success">Edit</a>
-                                            <a onClick={() => { Removefunction(item.id) }} className="btn btn-danger">Remove</a>
-                                            <a onClick={() => { LoadDetail(item.id) }} className="btn btn-primary">Details</a>
-                                        </td> */}
+                      <td>
+                        <a
+                          onClick={() => {
+                            removeTeam(team.id);
+                          }}
+                          className="btn btn-danger"
+                        >
+                          Remove
+                        </a>
+                      </td>
                     </tr>
                   ))}
               </tbody>
