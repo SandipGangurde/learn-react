@@ -83,6 +83,10 @@ function AddPlayer() {
     }
   };
 
+  const playerList = () => {
+    navigate("/admin/player");
+  };
+
   return (
     <>
       <AdminNavbar />
@@ -95,7 +99,7 @@ function AddPlayer() {
         {() => (
           <Container>
             <Form>
-              <Card className="col-md-6 mx-auto mt-5">
+              <Card className="col-md-6 mx-auto mt-2">
                 <Card.Body>
                   <Card.Title>
                     <h3 className="text-center mb-3">Add Player</h3>
@@ -195,13 +199,18 @@ function AddPlayer() {
                     />
                   </FloatingLabel>
                 </Card.Body>
-                <Button
-                  variant="btn btn-primary"
-                  className="col-md-5 mx-auto mb-4"
-                  type="submit"
-                >
-                  Submit
-                </Button>
+                <div className="text-center m-2">
+                  <a className="btn btn-outline-secondary" onClick={playerList}>
+                    Cancel
+                  </a>
+                  <Button
+                    variant="btn btn-outline-success"
+                    type="submit"
+                    className="ms-2"
+                  >
+                    Add
+                  </Button>
+                </div>
               </Card>
             </Form>
           </Container>

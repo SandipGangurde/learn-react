@@ -7,10 +7,9 @@ import AdminNavbar from "./Adminnavbar";
 const Dashboard = () => {
   const navigate = useNavigate();
 
-  const notify = (message) => {
-    toast(message);
-  };
-
+  /**
+   * First check loggedin user present or not
+   */
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("Login"));
     if (!user) {
@@ -18,12 +17,10 @@ const Dashboard = () => {
     }
   }, []);
 
-  
-
   return (
     <>
-      <div>
-        <AdminNavbar />
+      <AdminNavbar />
+      <div className="text-center">
         <h2>Welcome to the Dashboard!</h2>
       </div>
     </>

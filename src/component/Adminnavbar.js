@@ -9,6 +9,9 @@ import Button from "react-bootstrap/Button";
 function AdminNavbar() {
   const navigate = useNavigate();
 
+  /**
+   * logout function and clear localstorage
+   */
   const logout = () => {
     toast.success("Logout successfully");
     localStorage.clear();
@@ -17,16 +20,16 @@ function AdminNavbar() {
 
   return (
     <>
-      <Navbar expand="lg" className="bg-body-tertiary">
+      <Navbar expand="lg" className="navbar-light menu-bg fixed-top">
         <Container>
-          <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand>
+          <Navbar.Brand href="/">Home</Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="ms-auto">
-              <NavLink className="m-2" to="/admin/player">
+              <NavLink className="nav-menu m-2" to="/admin/player">
                 Player
               </NavLink>
-              <NavLink className="m-2" to="/admin/team">
+              <NavLink className="nav-menu m-2" to="/admin/team">
                 Team
               </NavLink>
               <Button variant="primary" onClick={logout}>

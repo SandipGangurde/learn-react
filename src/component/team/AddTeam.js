@@ -3,11 +3,11 @@ import { Field, Form, Formik, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";
 import Button from "react-bootstrap/Button";
-
+import { Container, Card, FloatingLabel } from "react-bootstrap";
 import { toast } from "react-toastify";
 import AdminNavbar from "../Adminnavbar";
 
-function AddTeam() {
+const AddTeam = () => {
   const navigate = useNavigate();
 
   const loginCheck = () => {
@@ -27,13 +27,9 @@ function AddTeam() {
   };
 
   const ValidationSchema = Yup.object().shape({
-    name: Yup.string().required("name is required"),
-    description: Yup.string().required("description is required"),
+    name: Yup.string().required("Name is required"),
+    description: Yup.string().required("Description is required"),
   });
-
-  const notify = (message) => {
-    toast(message);
-  };
 
   const backDashboard = () => {
     navigate("/admin/dashboard");
@@ -44,32 +40,27 @@ function AddTeam() {
   };
 
   const handleAddTeam = async (values) => {
-    debugger;
     try {
       await fetch("http://localhost:3001/teams", {
         method: "POST",
         headers: { "content-type": "application/json" },
         body: JSON.stringify(values),
       })
-        .then((res) => {
-          notify("Saved successfully.");
+        .then(() => {
+          toast.success("Saved successfully.");
           navigate("/admin/team");
         })
-        .catch((err) => {
-          notify("Error:", err.message);
-          console.log(err.message);
+        .catch((error) => {
+          toast.error("Error:", error.message);
         });
     } catch (error) {
-      notify("Error logging in:", error);
+      toast.error("Error:", error.message);
     }
   };
 
   return (
     <>
       <AdminNavbar />
-      <div className="container m-4">
-        <h3 className="text-center">Add Player</h3>
-      </div>
 
       <Formik
         initialValues={initialValues}
@@ -77,29 +68,63 @@ function AddTeam() {
         onSubmit={handleAddTeam}
       >
         {() => (
-          <div className="container">
+          <Container>
             <Form>
-              <div>
-                <Field type="text" name="name" placeholder="Enter name" />
-                <ErrorMessage component="div" name="name" />
-              </div>
-
-              <div>
-                <Field
-                  type="text"
-                  name="description"
-                  placeholder="Enter description"
-                />
-                <ErrorMessage component="div" name="description" />
-              </div>
-
-              <button type="submit">Submit</button>
+              <Card className="col-md-6 mx-auto mt-5">
+                <Card.Body>
+                  <Card.Title>
+                    <h3 className="text-center mb-3">Add Team</h3>
+                  </Card.Title>
+                  <FloatingLabel controlId="name" label="Name" className="mb-3">
+                    <Field
+                      name="name"
+                      id="name"
+                      className="form-control"
+                      placeholder="Name"
+                    />
+                    <ErrorMessage
+                      component="div"
+                      name="name"
+                      className="error-message"
+                    />
+                  </FloatingLabel>
+                  <FloatingLabel
+                    controlId="floatingDescription"
+                    label="Description"
+                    className="mb-3"
+                  >
+                    <Field
+                      name="description"
+                      id="floatingDescription"
+                      className="form-control"
+                      placeholder="Description"
+                    />
+                    <ErrorMessage
+                      component="div"
+                      name="description"
+                      className="text-danger"
+                    />
+                  </FloatingLabel>
+                </Card.Body>
+                <div className="text-center m-2">
+                  <a className="btn btn-outline-secondary" onClick={teamList}>
+                    Cancel
+                  </a>
+                  <Button
+                    variant="btn btn-outline-success"
+                    type="submit"
+                    className="ms-2"
+                  >
+                    Add
+                  </Button>
+                </div>
+              </Card>
             </Form>
-          </div>
+          </Container>
         )}
       </Formik>
     </>
   );
-}
+};
 
 export default AddTeam;

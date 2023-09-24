@@ -11,6 +11,32 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+.nav-menu {
+  text-decoration: none;
+}
 .error-message {
   color: #ff0000;
+}
+
+.content {
+  background-color: #2f3c7e;
+  color: #fbeaeb;
+  font-family: Roboto;
+  min-height: (100vh - 50px);
+  max-height: (100vh - 50px);
+  display: flex;
+  flex-direction: column;
+  padding-top: 70px;
+}
+
+.menu-bg {
+  background-color: #e3f2fd;
+}
+
+.footer {
+  background-color: #e3f2fd;
+  color: #2f3c7e;
+  text-align: center;
+  height: 50px;
 }

@@ -12,9 +12,12 @@ import {
 } from "react-bootstrap";
 import { toast } from "react-toastify";
 
-function Login() {
+const Login = () => {
   const navigate = useNavigate();
 
+  /**
+   * checks user is login or not if login navigate to dashboard
+   */
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("Login"));
     if (user) {
@@ -22,16 +25,26 @@ function Login() {
     }
   }, []);
 
+  /**
+   * initial value object sets all value empty string
+   */
   const initialValues = {
     username: "",
     password: "",
   };
 
+  /**
+   * validation schema for login form
+   */
   const ValidationSchema = Yup.object().shape({
     username: Yup.string().required("Username is required"),
     password: Yup.string().required("Password is required"),
   });
 
+  /**
+   * It checks user is already present or not if yes login success else falied
+   * @param {*} inpuUserData : Login form submiited data
+   */
   const handleLogin = async (inpuUserData) => {
     try {
       const response = await fetch("http://localhost:3001/users");
@@ -62,14 +75,16 @@ function Login() {
         onSubmit={handleLogin}
       >
         {() => (
-          <Container>
+          <Container
+            className="d-flex justify-content-center align-items-center vh-100"
+            fluid
+          >
             <Form>
-              <Card className="col-md-6 mx-auto mt-5">
+              <Card>
                 <Card.Body>
                   <Card.Title>
                     <h3 className="text-center mb-3">Login</h3>
                   </Card.Title>
-
                   <FloatingLabel
                     controlId="floatingUsername"
                     label="Username"
@@ -87,7 +102,6 @@ function Login() {
                       className="error-message"
                     />
                   </FloatingLabel>
-
                   <FloatingLabel
                     controlId="floatingPassword"
                     label="Password"
@@ -121,6 +135,6 @@ function Login() {
       </Formik>
     </>
   );
-}
+};
 
 export default Login;

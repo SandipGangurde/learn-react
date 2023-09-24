@@ -46,9 +46,29 @@
       "id": 4
     },
     {
-      "name": "PK",
-      "description": "Punjab Kings",
+      "name": "KKR",
+      "description": "Kolkata Knight Riders",
       "id": 5
+    },
+    {
+      "name": "mh",
+      "description": "Kolkata Knight Riders",
+      "id": 6
+    },
+    {
+      "name": "KKR",
+      "description": "shivray desc",
+      "id": 7
+    },
+    {
+      "name": "mh",
+      "description": "shivray desc",
+      "id": 8
+    },
+    {
+      "name": "RR",
+      "description": "shivray desc",
+      "id": 9
     }
   ]
 }

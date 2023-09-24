@@ -23,7 +23,7 @@ function Player() {
       })
         .then((res) => {
           toast.success("Removed successfully.");
-          window.location.reload();
+          fetchPlayers();
         })
         .catch((error) => {
           toast.error("Error:", error);
@@ -51,8 +51,8 @@ function Player() {
 
   useEffect(() => {
     loginCheck();
-    fetchPlayers();
     fetchTeams();
+    fetchPlayers();
   }, []);
 
   const backDashboard = () => {
@@ -76,7 +76,55 @@ function Player() {
   return (
     <>
       <AdminNavbar />
-      <div className="container mt-4">
+      <div className="container">
+        <div className="d-flex justify-content-between m-2">
+          <div></div>
+          <h2 className="text-center">Players</h2>
+          <Button variant="btn btn-outline-warning" onClick={addPlayer}>
+            Add Player
+          </Button>
+        </div>
+        <div className="table-responsive">
+          <table className="table table-bordered table-hover">
+            <thead className="table-primary">
+              <tr>
+                <td>ID</td>
+                <td>First Name</td>
+                <td>Last Name</td>
+                <td>Email</td>
+                <td>Contact</td>
+                <td>Team</td>
+                <td>Action</td>
+              </tr>
+            </thead>
+            <tbody>
+              {players &&
+                players.map((player) => (
+                  <tr key={player.id}>
+                    <td>{player.id}</td>
+                    <td>{player.firstName}</td>
+                    <td>{player.lastName}</td>
+                    <td>{player.email}</td>
+                    <td>{player.contact}</td>
+                    <td>{getTeamNameById(player.teamId)}</td>
+                    <td>
+                      <a
+                        onClick={() => {
+                          removePlayer(player.id);
+                        }}
+                        className="btn btn-outline-danger"
+                      >
+                        Remove
+                      </a>
+                    </td>
+                  </tr>
+                ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      {/* <div className="container mt-4">
         <div className="card">
           <div className="card-title p-3">
             <div className="d-flex justify-content-between">
@@ -126,7 +174,7 @@ function Player() {
             </table>
           </div>
         </div>
-      </div>
+      </div> */}
     </>
   );
 }
