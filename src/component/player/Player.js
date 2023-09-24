@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import AdminNavbar from "../Adminnavbar";
+import { toast } from "react-toastify";
 
 function Player() {
   const navigate = useNavigate();
@@ -21,33 +22,30 @@ function Player() {
         method: "DELETE",
       })
         .then((res) => {
-          alert("Removed successfully.");
-          console.log("deleted", res);
+          toast.success("Removed successfully.");
           window.location.reload();
         })
-        .catch((err) => {
-          console.log(err.message);
+        .catch((error) => {
+          toast.error("Error:", error);
         });
     }
   };
+
   const fetchTeams = async () => {
     try {
       const response = await fetch("http://localhost:3001/teams");
       setTeams(await response.json());
-      console.log(teams);
     } catch (error) {
-      console.error("Error fetching teams:", error);
+      toast.error("Error:", error);
     }
   };
 
   const fetchPlayers = async () => {
     try {
-      debugger;
       const response = await fetch("http://localhost:3001/players");
       setPlayers(await response.json());
-      console.log(players);
     } catch (error) {
-      console.error("Error fetching players:", error);
+      toast.error("Error:", error);
     }
   };
 
@@ -65,7 +63,11 @@ function Player() {
     navigate("/admin/player/add");
   };
 
-  // Function to get team name by teamId
+  /**
+   * Function to get team name by teamId
+   * @param {*} teamId
+   * @returns Team name
+   */
   const getTeamNameById = (teamId) => {
     const team = teams.find((team) => team.id == teamId);
     return team ? team.name : "";
@@ -86,9 +88,6 @@ function Player() {
             </div>
           </div>
           <div className="card-body">
-            <div className="divbtn">
-              {/* <Link to="employee/create" className="btn btn-success">Add New (+)</Link> */}
-            </div>
             <table className="table table-bordered">
               <thead className="bg-dark text-white">
                 <tr>
@@ -116,11 +115,10 @@ function Player() {
                           onClick={() => {
                             removePlayer(player.id);
                           }}
-                          className="btn btn-danger"
+                          className="btn btn-outline-danger"
                         >
                           Remove
                         </a>
-                        {/* <a onClick={() => { LoadDetail(item.id) }} className="btn btn-primary">Details</a> */}
                       </td>
                     </tr>
                   ))}
