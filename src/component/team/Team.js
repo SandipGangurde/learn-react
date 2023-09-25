@@ -3,42 +3,16 @@ import { useNavigate } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import AdminNavbar from "../Adminnavbar";
 import { toast } from "react-toastify";
+import DeleteConfirmDialog from "../modals/DeleteConfirmDialog";
 
 function Team() {
   const navigate = useNavigate();
   const [teams, setTeams] = useState([]);
+  const [showConfirmDialog, setShowConfirmDialog] = useState(false);
+  const [teamToDelete, setTeamToDelete] = useState(null);
 
   /**
-   * checks loggedin user present or not
-   */
-  const loginCheck = () => {
-    const user = JSON.parse(localStorage.getItem("Login"));
-    if (!user) {
-      navigate("/");
-    }
-  };
-
-  /**
-   * It removes team from json server
-   * @param {*} id : it is team id
-   */
-  const removeTeam = (id) => {
-    if (window.confirm("Do you want to remove?")) {
-      fetch("http://localhost:3001/teams/" + id, {
-        method: "DELETE",
-      })
-        .then(() => {
-          toast.success("Removed successfully.");
-          fetchTeams();
-        })
-        .catch((error) => {
-          toast.error("Error:", error);
-        });
-    }
-  };
-
-  /**
-   * fetch teams for listing
+   * Function to fetch teams for listing
    */
   const fetchTeams = async () => {
     try {
@@ -50,18 +24,63 @@ function Team() {
   };
 
   /**
-   * first it checks user login or not if login fetch teams
+   * Effect hook: Check if the user is logged in and fetch teams if logged in
    */
   useEffect(() => {
-    loginCheck();
-    fetchTeams();
-  }, []);
+    const user = JSON.parse(localStorage.getItem("Login"));
+    if (!user) {
+      navigate("/");
+    } else {
+      fetchTeams();
+    }
+  }, [navigate]);
 
   /**
-   * It navigates to add team form
+   * Function to navigate to the "Add Team" form
    */
   const addTeam = () => {
     navigate("/admin/team/add");
+  };
+
+  /**
+   * Function to handle the "Remove" button click and open the delete confirm dialog
+   * @param {*} team Team to be removed
+   */
+  const handleDelete = (player) => {
+    setTeamToDelete(player);
+    setShowConfirmDialog(true);
+  };
+
+  /**
+   * Function to confirm and perform the team deletion
+   */
+  const confirmDelete = async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:3001/teams/${teamToDelete.id}`,
+        {
+          method: "DELETE",
+        }
+      );
+
+      if (response.ok) {
+        toast.success("Removed successfully.");
+        fetchTeams(); // Fetch data again after successful deletion
+      } else {
+        toast.error("Failed to delete.");
+      }
+    } catch (error) {
+      toast.error("Error:", error);
+    } finally {
+      setShowConfirmDialog(false); // Close the confirmation dialog
+    }
+  };
+
+  /**
+   * Function to cancel the delete operation and close the confirmation dialog
+   */
+  const cancelDelete = () => {
+    setShowConfirmDialog(false);
   };
 
   return (
@@ -93,14 +112,14 @@ function Team() {
                     <td>{team.name}</td>
                     <td>{team.description}</td>
                     <td>
-                      <a
+                      <span
                         onClick={() => {
-                          removeTeam(team.id);
+                          handleDelete(team);
                         }}
                         className="btn btn-outline-danger"
                       >
                         Remove
-                      </a>
+                      </span>
                     </td>
                   </tr>
                 ))}
@@ -108,6 +127,16 @@ function Team() {
           </table>
         </div>
       </div>
+
+      {/* Render the ConfirmDialog */}
+      <DeleteConfirmDialog
+        show={showConfirmDialog}
+        message={`Are you sure you want to delete ${
+          teamToDelete ? teamToDelete.name : " this item"
+        }?`}
+        onConfirm={confirmDelete}
+        onCancel={cancelDelete}
+      />
     </>
   );
 }

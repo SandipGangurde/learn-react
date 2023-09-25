@@ -9,10 +9,8 @@ import Button from "react-bootstrap/Button";
 function AdminNavbar() {
   const navigate = useNavigate();
 
-  /**
-   * logout function and clear localstorage
-   */
-  const logout = () => {
+  // Handles user logout, clears local storage, and navigates to the home page
+  const handleLogout = () => {
     toast.success("Logout successfully");
     localStorage.clear();
     navigate("/");
@@ -32,7 +30,7 @@ function AdminNavbar() {
               <NavLink className="nav-menu m-2" to="/admin/team">
                 Team
               </NavLink>
-              <Button variant="primary" onClick={logout}>
+              <Button variant="primary" onClick={handleLogout}>
                 Logout
               </Button>
             </Nav>

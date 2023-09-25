@@ -11,24 +11,17 @@ const AddTeam = () => {
   const navigate = useNavigate();
 
   /**
-   * checks user is login or not
+   * Effect hook: Checks if the user is logged in; if not, redirects to the login page
    */
-  const loginCheck = () => {
+  useEffect(() => {
     const user = JSON.parse(localStorage.getItem("Login"));
     if (!user) {
       navigate("/");
     }
-  };
+  }, [navigate]);
 
   /**
-   * first checks user is login or not
-   */
-  useEffect(() => {
-    loginCheck();
-  }, []);
-
-  /**
-   * initially sets value empty for form
+   * Initial values for the form
    */
   const initialValues = {
     name: "",
@@ -36,7 +29,7 @@ const AddTeam = () => {
   };
 
   /**
-   * validation schema for Add Team form
+   * Validation schema for the Add Team form
    */
   const ValidationSchema = Yup.object().shape({
     name: Yup.string().required("Name is required"),
@@ -44,30 +37,30 @@ const AddTeam = () => {
   });
 
   /**
-   * navigates to team list
+   * Navigate to the team list page
    */
   const teamList = () => {
     navigate("/admin/team");
   };
 
   /**
-   * It adds team into json server
-   * @param {*} values : add team form submitted values
+   * Handles adding a team to the JSON server
+   * @param {*} values: Submitted form values
    */
   const handleAddTeam = async (values) => {
     try {
-      await fetch("http://localhost:3001/teams", {
+      const response = await fetch("http://localhost:3001/teams", {
         method: "POST",
         headers: { "content-type": "application/json" },
         body: JSON.stringify(values),
-      })
-        .then(() => {
-          toast.success("Saved successfully.");
-          navigate("/admin/team");
-        })
-        .catch((error) => {
-          toast.error("Error:", error.message);
-        });
+      });
+
+      if (response.ok) {
+        toast.success("Saved successfully.");
+        navigate("/admin/team");
+      } else {
+        toast.error("Failed to save.");
+      }
     } catch (error) {
       toast.error("Error:", error.message);
     }
@@ -123,9 +116,12 @@ const AddTeam = () => {
                   </FloatingLabel>
                 </Card.Body>
                 <div className="text-center m-2">
-                  <a className="btn btn-outline-secondary" onClick={teamList}>
+                  <Button
+                    variant="btn btn-outline-secondary"
+                    onClick={teamList}
+                  >
                     Cancel
-                  </a>
+                  </Button>
                   <Button
                     variant="btn btn-outline-success"
                     type="submit"

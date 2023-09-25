@@ -55,34 +55,31 @@ const AddPlayer = () => {
     }
   };
 
-  const loginCheck = () => {
+  useEffect(() => {
     const user = JSON.parse(localStorage.getItem("Login"));
     if (!user) {
       navigate("/");
+    } else {
+      fetchTeams();
     }
-  };
-
-  useEffect(() => {
-    loginCheck();
-    fetchTeams();
-  }, []);
+  }, [navigate]);
 
   const handleAddPlayer = async (values) => {
     try {
-      await fetch("http://localhost:3001/players", {
+      const response = await fetch("http://localhost:3001/players", {
         method: "POST",
         headers: { "content-type": "application/json" },
         body: JSON.stringify(values),
-      })
-        .then((response) => {
-          toast.success("Saved successfully.");
-          navigate("/admin/player");
-        })
-        .catch((error) => {
-          toast.error("Error:", error.message);
-        });
+      });
+
+      if (response.ok) {
+        toast.success("Saved successfully.");
+        navigate("/admin/player");
+      } else {
+        toast.error("Failed to save.");
+      }
     } catch (error) {
-      toast.error("Error:", error);
+      toast.error("Error:", error.message);
     }
   };
 
@@ -203,9 +200,12 @@ const AddPlayer = () => {
                   </FloatingLabel>
                 </Card.Body>
                 <div className="text-center m-2">
-                  <a className="btn btn-outline-secondary" onClick={playerList}>
+                  <Button
+                    variant="btn btn-outline-secondary"
+                    onClick={playerList}
+                  >
                     Cancel
-                  </a>
+                  </Button>
                   <Button
                     variant="btn btn-outline-success"
                     type="submit"

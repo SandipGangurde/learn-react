@@ -2,31 +2,24 @@ import React, { useEffect } from "react";
 import { Field, Form, Formik, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";
-import {
-  Card,
-  Row,
-  Col,
-  Button,
-  Container,
-  FloatingLabel,
-} from "react-bootstrap";
+import { Card, Button, Container, FloatingLabel } from "react-bootstrap";
 import { toast } from "react-toastify";
 
 const Login = () => {
   const navigate = useNavigate();
 
   /**
-   * checks user is login or not if login navigate to dashboard
+   * Check if the user is already logged in, and if so, navigate to the dashboard.
    */
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("Login"));
     if (user) {
       navigate("/admin/dashboard");
     }
-  }, []);
+  }, [navigate]);
 
   /**
-   * initial value object sets all value empty string
+   * Initial form field values
    */
   const initialValues = {
     username: "",
@@ -34,7 +27,7 @@ const Login = () => {
   };
 
   /**
-   * validation schema for login form
+   * Validation schema for the login form
    */
   const ValidationSchema = Yup.object().shape({
     username: Yup.string().required("Username is required"),
@@ -42,8 +35,8 @@ const Login = () => {
   });
 
   /**
-   * It checks user is already present or not if yes login success else falied
-   * @param {*} inpuUserData : Login form submiited data
+   * Handle the login form submission
+   * @param {*} inpuUserData : Login form data
    */
   const handleLogin = async (inpuUserData) => {
     try {

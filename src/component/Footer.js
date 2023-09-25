@@ -3,10 +3,17 @@ import { Container, Row, Col } from "react-bootstrap";
 
 function Footer() {
   return (
-    <div className="footer d-flex justify-content-between p-2">
-      <p>&copy; {new Date().getFullYear()} Your Company Name</p>
-
-      <div>Terms of Service | Privacy Policy</div>
+    <div className="footer p-2">
+      <Container>
+        <Row className="justify-content-between">
+          <Col>
+            <p>&copy; {new Date().getFullYear()} Your Company Name</p>
+          </Col>
+          <Col className="text-end">
+            <span>Terms of Service | Privacy Policy</span>
+          </Col>
+        </Row>
+      </Container>
     </div>
   );
 }
