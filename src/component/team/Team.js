@@ -94,7 +94,7 @@ function Team() {
             Add Team
           </Button>
         </div>
-        <div className="table-responsive">
+        <div className="table-responsive custom-table-body">
           <table className="table table-bordered table-hover">
             <thead className="table-primary">
               <tr>

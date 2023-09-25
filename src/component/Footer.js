@@ -3,7 +3,7 @@ import { Container, Row, Col } from "react-bootstrap";
 
 function Footer() {
   return (
-    <div className="footer p-2">
+    <div className="footer p-2 fixed-bottom">
       <Container>
         <Row className="justify-content-between">
           <Col>

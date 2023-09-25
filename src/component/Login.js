@@ -68,10 +68,7 @@ const Login = () => {
         onSubmit={handleLogin}
       >
         {() => (
-          <Container
-            className="d-flex justify-content-center align-items-center vh-100"
-            fluid
-          >
+          <Container className="login-container">
             <Form>
               <Card>
                 <Card.Body>
