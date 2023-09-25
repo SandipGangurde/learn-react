@@ -11,7 +11,7 @@ const AddPlayer = () => {
   const [teams, setTeams] = useState([]);
 
   /**
-   * sets initial values empty
+   * Define initial form field values
    */
   const initialValues = {
     firstName: "",
@@ -21,11 +21,14 @@ const AddPlayer = () => {
     teamId: "",
   };
 
-  // regular expression for only character allowd, email, phone number
+  // Regular expressions for validation
   const charactersRegex = /^[A-Za-z]+$/;
   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   const phoneNumberRegex = /^\d{10}$/;
 
+  /**
+   * Define validation schema using Yup
+   */
   const ValidationSchema = Yup.object().shape({
     firstName: Yup.string()
       .min(2, "First name should be at least 2 characters.")
@@ -46,6 +49,9 @@ const AddPlayer = () => {
     teamId: Yup.string().required("Select team"),
   });
 
+  /**
+   * Function to fetch teams from the server
+   */
   const fetchTeams = async () => {
     try {
       const response = await fetch("http://localhost:3001/teams");
@@ -56,6 +62,7 @@ const AddPlayer = () => {
   };
 
   useEffect(() => {
+    // Check if the user is logged in, if not, redirect to the login page
     const user = JSON.parse(localStorage.getItem("Login"));
     if (!user) {
       navigate("/");
@@ -64,6 +71,10 @@ const AddPlayer = () => {
     }
   }, [navigate]);
 
+  /**
+   * Function handle form submission
+   * @param {*} values : form data
+   */
   const handleAddPlayer = async (values) => {
     try {
       const response = await fetch("http://localhost:3001/players", {
@@ -83,6 +94,9 @@ const AddPlayer = () => {
     }
   };
 
+  /**
+   *  Function navigate to the player list page
+   */
   const playerList = () => {
     navigate("/admin/player");
   };
